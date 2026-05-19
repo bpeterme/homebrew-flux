@@ -5,8 +5,8 @@ class Flux < Formula
 
   # Stable release fields — patched automatically by release.yml on each push to main.
   # url    "https://github.com/bpeterme/flux/archive/refs/tags/YYYY.MM.DD.N.tar.gz"
-  # sha256 "..."
-  # version "YYYY.MM.DD.N"
+  # sha256 "90630bd1ee00b89794318ea7868d823ba20fa86aa8adce3713e168d0900848e9"
+  # version "2026.05.19.0"
 
   head "https://github.com/bpeterme/flux.git", branch: "main"
 
