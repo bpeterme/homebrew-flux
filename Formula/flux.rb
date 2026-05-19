@@ -5,26 +5,35 @@ class Flux < Formula
 
   # Stable release fields — patched automatically by release.yml on each push to main.
   # url    "https://github.com/bpeterme/flux/archive/refs/tags/YYYY.MM.DD.N.tar.gz"
-  # sha256 "90630bd1ee00b89794318ea7868d823ba20fa86aa8adce3713e168d0900848e9"
-  # version "2026.05.19.0"
+  # sha256 "..."
+  # version "YYYY.MM.DD.N"
 
-  head "https://github.com/bpeterme/flux.git", branch: "main"
+  depends_on "dvc"
+
+  head "https://github.com/bpeterme/flux.git", branch: "dev"
 
   def install
-    # Hooks live in share/flux/ so setup.sh can find them after installation.
+    version_str = build.head? ? "HEAD-#{`git describe --tags --always`.chomp}" : version.to_s
+    inreplace "flux", 'VERSION="dev"', "VERSION=\"#{version_str}\""
+    # Hook lives in share/flux/ so `flux setup` can find it after installation.
     (share/"flux").install "pre-commit"
-    bin.install "setup.sh" => "flux-setup"
+    (share/"flux").install "flux.env.example"
+    bin.install "flux"
   end
 
   def caveats
     <<~EOS
-      Run flux-setup once inside each Git repo you want to manage:
-        cd your-repo
-        flux-setup
+      Before running flux setup for the first time, create your config:
+        mkdir -p ~/.config/flux
+        cp #{share}/flux/flux.env.example ~/.config/flux/flux.env
+        # edit ~/.config/flux/flux.env with your R2 credentials
+
+      Then run flux setup once inside each Git repo you want to manage:
+        cd your-repo && flux setup
     EOS
   end
 
   test do
-    system "bash", "-n", bin/"flux-setup"
+    assert_match "flux ", shell_output("#{bin}/flux version")
   end
 end
