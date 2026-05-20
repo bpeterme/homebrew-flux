@@ -4,16 +4,16 @@ class Flux < Formula
   license "MIT"
 
   # Stable release fields — patched automatically by release.yml on each push to main.
-  url    "https://github.com/bpeterme/flux/archive/refs/tags/2026.05.19.1.tar.gz"
-  sha256  "92a0250d2f066f37203aefd2ecc32e857fdeae3bc3058f73e0f299a4890d42e8"
-  version "2026.05.19.1"
+  url    "https://github.com/bpeterme/flux/archive/refs/tags/2026.05.20.0.tar.gz"
+  sha256  "465ab92995c3c55e350ce2f858992c56aa263eda1e76fcc4d0f9789dfd5b3575"
+  version "2026.05.20.0"
 
   head "https://github.com/bpeterme/flux.git", branch: "dev"
 
   def install
     version_str = build.head? ? "HEAD-#{`git describe --tags --always`.chomp}" : version.to_s
     inreplace "flux", 'VERSION="dev"', "VERSION=\"#{version_str}\""
-    # Hook lives in share/flux/ so `flux setup` can find it after installation.
+    # Hook and example config live in share/flux/ so flux add can find them.
     (share/"flux").install "pre-commit"
     (share/"flux").install "flux.env.example"
     bin.install "flux"
@@ -24,13 +24,11 @@ class Flux < Formula
       flux requires dvc — install it if you haven't already:
         pip install "dvc[s3]"
 
-      Before running flux setup for the first time, create your config:
-        mkdir -p ~/.config/flux
-        cp #{share}/flux/flux.env.example ~/.config/flux/flux.env
-        # edit ~/.config/flux/flux.env with your R2 credentials
+      Configure flux once per machine (stores credentials in macOS Keychain):
+        flux config
 
-      Then run flux setup once inside each Git repo you want to manage:
-        cd your-repo && flux setup
+      Then add flux to each Git repo you want to manage:
+        cd your-repo && flux add
     EOS
   end
 
