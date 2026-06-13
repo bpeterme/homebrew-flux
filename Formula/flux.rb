@@ -4,9 +4,9 @@ class Flux < Formula
   license "MIT"
 
   # Stable release fields — patched automatically by release.yml on each push to main.
-  url    "https://github.com/bpeterme/flux/archive/refs/tags/2026.06.08.1.tar.gz"
-  sha256  "40d5c397a63b9392c1707f112946cf0e952d4c8e03fe9edadaa4f6be64ec3f05"
-  version "2026.06.08.1"
+  # url    "https://github.com/bpeterme/flux/archive/refs/tags/YYYY.MM.DD.N.tar.gz"
+  # sha256 "..."
+  # version "YYYY.MM.DD.N"
 
   head "https://github.com/bpeterme/flux.git", branch: "dev"
 
@@ -17,6 +17,7 @@ class Flux < Formula
     (share/"flux").install "pre-commit"
     (share/"flux").install "flux.env.example"
     bin.install "flux"
+    zsh_completion.install "completions/_flux"
   end
 
   def caveats
