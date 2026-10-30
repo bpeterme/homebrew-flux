@@ -4,17 +4,18 @@ class Flux < Formula
   license "MIT"
 
   # Stable release fields — patched automatically by release.yml on each push to main.
-  url    "https://github.com/bpeterme/flux/archive/refs/tags/2026.10.30.0.tar.gz"
-  sha256  "0063c4904bf6c36056caea6ae52441d64c747956ad003e6b0cad6f3fc14b4fc7"
-  version "2026.10.30.0"
+  url    "https://github.com/bpeterme/flux/archive/refs/tags/2026.10.30.1.tar.gz"
+  sha256  "34e81fa21bf45f958c17ea1c3e23065573b624953948a3813894116b2fdc011b"
+  version "2026.10.30.1"
 
   head "https://github.com/bpeterme/flux.git", branch: "dev"
 
   def install
     version_str = build.head? ? "HEAD-#{`git rev-parse --short HEAD`.chomp}" : version.to_s
     inreplace "flux", 'VERSION="dev"', "VERSION=\"#{version_str}\""
-    # Hook and example config live in share/flux/ so flux add can find them.
+    # Hooks and example config live in share/flux/ so flux add can find them.
     (share/"flux").install "pre-commit"
+    (share/"flux").install "pre-push"
     (share/"flux").install "flux.env.example"
     bin.install "flux"
     zsh_completion.install "completions/_flux"
