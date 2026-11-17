@@ -4,9 +4,9 @@ class Flux < Formula
   license "MIT"
 
   # Stable release fields — patched automatically by release.yml on each push to main.
-  url    "https://github.com/bpeterme/flux/archive/refs/tags/2026.11.14.0.tar.gz"
-  sha256  "83a85d9346d63725707eebdf2113b280f3bc173944193d858d65da96a2d74666"
-  version "2026.11.14.0"
+  url    "https://github.com/bpeterme/flux/archive/refs/tags/2026.11.17.0.tar.gz"
+  sha256  "0a2748d81e85599fedddc85044a75234d98870834fe9c158d69190fe218d2635"
+  version "2026.11.17.0"
 
   head "https://github.com/bpeterme/flux.git", branch: "dev"
 
